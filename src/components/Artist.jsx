@@ -35,7 +35,7 @@ const Artist = function ({ singer }) {
       {data && (
         <>
           {data.data
-            .map((sing, index) => (
+            .map((sing) => (
               <Col className="text-center" key={sing.id}>
                 <img className="img-fluid" src={sing.album.cover_medium} alt="track" />
                 <p>
