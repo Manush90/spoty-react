@@ -1,12 +1,13 @@
-import Main from "./components/Main.jsx";
-import SideB from "./components/SideB.jsx";
-import "../src/App.css";
+import "./assets/css/style.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Sidebar from "./components/Sidebar";
+import Player from "./components/Player";
 
 function App() {
   return (
     <div className="App">
-      <SideB></SideB>
-      <Main></Main>
+      <Sidebar />
+      <Player />
     </div>
   );
 }

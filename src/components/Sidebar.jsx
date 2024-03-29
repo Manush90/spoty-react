@@ -1,18 +1,38 @@
-import React from "react";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import logo from "../assets/logo/logo.png";
+import MyMain from "./MyMain";
+import { BiHome, BiBookOpen } from "react-icons/bi";
+import { useState } from "react";
+import { getSearchedAction } from "../redux/actions";
+import { useDispatch } from "react-redux";
+import "../assets/css/style.css";
 
-class Sidebar extends React.Component {
-  render() {
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col col-2">
+const Sidebar = function () {
+  const [music, setMusic] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (music.trim() !== "") {
+      dispatch(getSearchedAction(music));
+    }
+  };
+
+  return (
+    <>
+      <Container>
+        <Row>
+          <Col xs={2}>
             <nav
               className="navbar navbar-expand-md fixed-left justify-content-between"
               id="sidebar"
             >
               <div className="container flex-column align-items-start">
                 <a className="navbar-brand" href="index.html">
-                  <img src="assets/logo/logo.png" alt="Spotify Logo" width="131" height="40" />
+                  <img src={logo} alt="Spotify Logo" width="131" height="40" />
                 </a>
                 <button
                   className="navbar-toggler"
@@ -27,19 +47,19 @@ class Sidebar extends React.Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div className="navbar-nav">
-                    <ul>
+                    <ul className="ps-1">
                       <li>
-                        <a className="nav-item nav-link d-flex align-items-center" href="#">
-                          <i className="bi bi-house-door-fill"></i>&nbsp; Home
+                        <a className="nav-item nav-link d-flex align-items-center" href="#i">
+                          <BiHome className="icons"></BiHome>&nbsp; Home
                         </a>
                       </li>
                       <li>
-                        <a className="nav-item nav-link d-flex align-items-center" href="#">
-                          <i className="bi bi-book-fill"></i>&nbsp; Your Library
+                        <a className="nav-item nav-link d-flex align-items-center" href="#i">
+                          <BiBookOpen className="bi bi-book-fill"></BiBookOpen>&nbsp; Your Library
                         </a>
                       </li>
                       <li>
-                        <form className="input-group mt-3" onSubmit={(event) => this.search(event)}>
+                        <form className="input-group mt-3" onSubmit={handleSearch}>
                           <input
                             type="text"
                             className="form-control"
@@ -47,11 +67,14 @@ class Sidebar extends React.Component {
                             placeholder="Search"
                             aria-label="Search"
                             aria-describedby="basic-addon2"
+                            onChange={(e) => {
+                              setMusic(e.target.value);
+                            }}
                           />
                           <div className="input-group-append">
                             <button
                               className="btn btn-outline-secondary btn-sm h-100"
-                              type="submit"
+                              onClick={handleSearch}
                             >
                               GO
                             </button>
@@ -63,25 +86,23 @@ class Sidebar extends React.Component {
                 </div>
               </div>
               <div className="nav-btn">
-                <button className="btn signup-btn" type="button">
+                <button className="signup-btn" type="button">
                   Sign Up
                 </button>
-                <button className="btn login-btn" type="button">
+                <button className="login-btn" type="button">
                   Login
                 </button>
-                <a href="#">Cookie Policy</a> |<a href="#"> Privacy</a>
+                <div>
+                  <a href="#i">Cookie Policy</a> |<a href="#i"> Privacy</a>
+                </div>
               </div>
             </nav>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  search(event) {
-    event.preventDefault();
-    console.log("Ricerca eseguita!");
-  }
-}
+          </Col>
+        </Row>
+      </Container>
+      <MyMain />
+    </>
+  );
+};
 
 export default Sidebar;
